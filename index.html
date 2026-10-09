@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diksha Shahi · AI Engineer</title>
+<meta name="description" content="Diksha Shahi — final-year B.Tech IT student building LLM systems: retrieval, routing, prompt-injection defense and validated structured generation.">
+<meta name="theme-color" content="#0b0d10">
+<meta name="author" content="Diksha Shahi">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0d10'/%3E%3Crect x='3.5' y='3.5' width='25' height='25' fill='none' stroke='%2352d4e8'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='12' fill='%23e9edf1' text-anchor='middle'%3EDS%3C/text%3E%3C/svg%3E">
+<!-- After deploying, replace diksha159457.github.io below with your real address -->
+<link rel="canonical" href="https://diksha159457.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Diksha Shahi · AI Engineer">
+<meta property="og:description" content="LLM systems built to be checked: retrieval, routing, prompt-injection defense and validated structured generation.">
+<meta property="og:url" content="https://diksha159457.github.io/">
+<meta property="og:image" content="https://diksha159457.github.io/covid-dashboard.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Diksha Shahi","jobTitle":"AI Developer Intern","url":"https://diksha159457.github.io/","sameAs":["https://github.com/Diksha159457","https://www.linkedin.com/in/diksha-shahi"]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: lab notebook — a narrow reading column with a left margin of mono annotations; projects are numbered figures with real pipeline diagrams. Single dark look by choice. */
+:root{
+  --ink:#0b0d10;        /* page ground, near-black with a cool bias */
+  --panel:#11151a;      /* raised figures */
+  --line:#232a32;       /* hairlines */
+  --line-2:#313a45;
+  --paper:#e9edf1;      /* primary text, off-white */
+  --muted:#93a0ad;      /* secondary text */
+  --faint:#5f6b78;      /* annotations */
+  --signal:#52d4e8;     /* cyan accent: links, live states, data paths */
+  --violet:#a58bff;     /* secondary accent, used only for model/LLM nodes */
+  --ok:#5fd39a; --warn:#e8b15a;
+  --f-display:"Newsreader","Iowan Old Style","Georgia",serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --s-1:.8125rem; --s0:1rem; --s1:1.1875rem; --s2:1.5rem; --s3:2.125rem; --s4:clamp(2.5rem,6vw,4.25rem);
+  --gutter:clamp(16px,4vw,40px);
+  --col:72rem;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--ink);color:var(--paper);font-family:var(--f-body);font-size:var(--s0);line-height:1.6;-webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;background-position:-1px -1px;background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(60rem 40rem at 85% -10%,rgba(82,212,232,.10),transparent 60%),radial-gradient(50rem 40rem at -10% 30%,rgba(165,139,255,.06),transparent 60%),linear-gradient(var(--ink),var(--ink));opacity:.94}
+main,header,footer{position:relative;z-index:1}
+a{color:var(--signal);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--paper)}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--col);margin-inline:auto;padding-inline:var(--gutter)}
+.mono{font-family:var(--f-mono);font-size:var(--s-1);letter-spacing:.02em}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.skip{position:absolute;left:-999px;top:8px;background:var(--paper);color:var(--ink);padding:8px 12px;z-index:50}
+.skip:focus{left:8px}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(11,13,16,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px}
+.brand{font-family:var(--f-mono);font-size:.875rem;color:var(--paper);text-decoration:none;display:flex;gap:10px;align-items:center}
+.brand b{display:inline-grid;place-items:center;width:26px;height:26px;border:1px solid var(--line-2);font-weight:500;font-size:.75rem}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+.nav ul a{font-family:var(--f-mono);font-size:.8125rem;color:var(--muted);text-decoration:none}
+.nav ul a:hover{color:var(--paper)}
+.menu-btn{display:none;background:none;border:1px solid var(--line-2);color:var(--paper);font-family:var(--f-mono);font-size:.8125rem;padding:6px 10px;cursor:pointer}
+@media (max-width:760px){
+  .menu-btn{display:block}
+  .nav ul{position:absolute;top:56px;left:0;right:0;flex-direction:column;gap:0;background:var(--ink);border-bottom:1px solid var(--line);padding:8px var(--gutter) 16px}
+  .nav ul a{display:block;padding:12px 0;font-size:.9375rem;border-bottom:1px solid var(--line)}
+  .nav ul:not(.open){display:none}
+}
+
+/* hero */
+.hero{padding-block:clamp(56px,10vw,120px) clamp(48px,7vw,88px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center}
+.status{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:.78rem;color:var(--muted);border:1px solid var(--line-2);padding:6px 12px 6px 10px;background:var(--panel)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(95,211,154,.5);animation:ping 2.4s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(95,211,154,.45)}70%{box-shadow:0 0 0 8px rgba(95,211,154,0)}100%{box-shadow:0 0 0 0 rgba(95,211,154,0)}}
+.hero h1{font-size:var(--s4);line-height:1.04;margin-block:28px 22px;font-weight:350}
+.hero h1 em{font-style:italic;color:var(--signal);font-weight:300}
+.who{font-family:var(--f-mono);font-size:.875rem;color:var(--paper);margin-bottom:6px}
+.lede{color:var(--muted);font-size:var(--s1);max-width:36em;line-height:1.55}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:.875rem;text-decoration:none;padding:12px 18px;border:1px solid var(--line-2);color:var(--paper);background:transparent;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.btn:hover{border-color:var(--paper);color:var(--paper)}
+.btn.primary{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.btn.primary:hover{background:var(--signal);border-color:var(--signal);color:var(--ink)}
+.btn .arr{transition:transform .2s}
+.btn:hover .arr{transform:translateX(3px)}
+.links{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:22px}
+.links a{font-family:var(--f-mono);font-size:.8125rem;color:var(--muted);text-decoration:none}
+.links a:hover{color:var(--signal)}
+.fig{border:1px solid var(--line);background:var(--panel);position:relative}
+.fig-cap{display:flex;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:.72rem;color:var(--faint);letter-spacing:.04em}
+.fig svg{display:block;width:100%;height:auto}
+.scroll-cue{display:flex;align-items:center;gap:12px;margin-top:clamp(48px,7vw,80px);font-family:var(--f-mono);font-size:.75rem;color:var(--faint);text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
+.scroll-cue span.l{width:40px;height:1px;background:var(--line-2);position:relative;overflow:hidden}
+.scroll-cue span.l::after{content:"";position:absolute;inset:0;background:var(--signal);transform:translateX(-100%);animation:slide 2.6s ease-in-out infinite}
+@keyframes slide{50%{transform:translateX(0)}100%{transform:translateX(100%)}}
+@media (max-width:880px){.hero-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* sections */
+section.block{padding-block:clamp(56px,8vw,104px);border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:12rem minmax(0,1fr);gap:24px;margin-bottom:clamp(32px,5vw,56px);align-items:end}
+.sec-head h2{font-size:var(--s3);line-height:1.15}
+.sec-head p{color:var(--muted);max-width:40em;margin-top:10px}
+@media (max-width:760px){.sec-head{grid-template-columns:minmax(0,1fr);gap:8px}}
+
+/* evidence strip */
+.evidence{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);background:var(--panel)}
+.evidence div{padding:18px 18px 20px;border-right:1px solid var(--line);min-width:0}
+.evidence div:last-child{border-right:0}
+.evidence b{display:block;font-family:var(--f-display);font-weight:400;font-size:var(--s3);line-height:1;font-variant-numeric:tabular-nums;margin-bottom:8px}
+.evidence span{font-size:var(--s-1);color:var(--muted)}
+@media (max-width:760px){.evidence{grid-template-columns:repeat(2,minmax(0,1fr))}.evidence div:nth-child(2){border-right:0}.evidence div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+/* project figures */
+.project{display:grid;grid-template-columns:12rem minmax(0,1fr);gap:24px;padding-block:40px;border-top:1px solid var(--line)}
+.project:first-of-type{border-top:0;padding-top:0}
+.p-meta{display:flex;flex-direction:column;gap:14px;font-family:var(--f-mono);font-size:.75rem;color:var(--faint)}
+.p-meta .num{font-size:.8125rem;color:var(--paper)}
+.badge{display:inline-flex;align-items:center;gap:8px;width:max-content;max-width:100%;padding:3px 9px;border:1px solid var(--line-2);color:var(--muted)}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--faint)}
+.badge.live::before{background:var(--ok)}
+.badge.ci::before{background:var(--signal)}
+.badge.wip::before{background:var(--warn)}
+.p-body{min-width:0}
+.p-body h3{font-size:clamp(1.75rem,3.4vw,2.5rem);line-height:1.1}
+.p-body h3 small{display:block;font-family:var(--f-mono);font-size:.78rem;color:var(--faint);margin-top:8px;letter-spacing:.03em}
+.value{font-size:var(--s1);color:var(--paper);max-width:38em;margin-block:16px 18px;line-height:1.5}
+.stack{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.stack li{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);border:1px solid var(--line);padding:3px 8px}
+.p-fig{margin:26px 0;min-width:0}
+.p-fig .diagram{overflow-x:auto}
+.p-fig .diagram svg{min-width:560px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-block:22px}
+.facts div{background:var(--ink);padding:14px 16px;min-width:0}
+.facts dt{font-family:var(--f-mono);font-size:.7rem;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.facts dd{margin:0;font-size:.9375rem;color:var(--paper);line-height:1.45}
+.p-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.p-links a{font-family:var(--f-mono);font-size:.8125rem;text-decoration:none;padding:8px 12px;border:1px solid var(--line-2);color:var(--paper)}
+.p-links a:hover{border-color:var(--signal);color:var(--signal)}
+.featured .p-body h3{font-size:clamp(2rem,4.4vw,3.25rem)}
+.metric-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.9rem}
+.metric-table th,.metric-table td{text-align:right;padding:9px 12px;border-bottom:1px solid var(--line)}
+.metric-table th:first-child,.metric-table td:first-child{text-align:left}
+.metric-table th{font-family:var(--f-mono);font-weight:400;font-size:.7rem;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+.metric-table tr.us td{color:var(--paper)}
+.metric-table tr.us td:first-child::before{content:"→ ";color:var(--signal)}
+.metric-table td{color:var(--muted)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);background:var(--panel)}
+.note{font-size:var(--s-1);color:var(--faint);margin-top:10px;max-width:46em}
+@media (max-width:760px){.project{grid-template-columns:minmax(0,1fr);gap:14px}.p-meta{flex-direction:row;flex-wrap:wrap;align-items:center}}
+
+/* case study */
+details.case{margin-top:24px;border:1px solid var(--line);background:var(--panel)}
+details.case summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;font-family:var(--f-mono);font-size:.8125rem;color:var(--paper)}
+details.case summary::-webkit-details-marker{display:none}
+details.case summary::after{content:"+";font-size:1.1rem;color:var(--signal);transition:transform .2s}
+details.case[open] summary::after{transform:rotate(45deg)}
+details.case summary:hover{color:var(--signal)}
+.case-body{padding:6px 16px 22px;border-top:1px solid var(--line);display:grid;gap:22px}
+.case-body section{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:16px}
+.case-body h4{margin:0;font-family:var(--f-mono);font-weight:400;font-size:.72rem;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;padding-top:4px}
+.case-body p,.case-body li{color:var(--muted);font-size:.9375rem;max-width:62ch}
+.case-body ul{margin:0;padding-left:1.1em;display:grid;gap:6px}
+.case-body strong{color:var(--paper);font-weight:500}
+.case-body code{font-family:var(--f-mono);font-size:.84em;color:var(--paper);background:var(--ink);padding:1px 5px;border:1px solid var(--line)}
+@media (max-width:760px){.case-body section{grid-template-columns:minmax(0,1fr);gap:6px}}
+
+/* more work */
+.more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.more article{background:var(--ink);padding:24px;display:flex;flex-direction:column;gap:12px;min-width:0;transition:background .2s}
+.more article:hover{background:var(--panel)}
+.more h3{font-size:1.5rem}
+.more p{color:var(--muted);font-size:.9375rem}
+.more .row{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:auto;padding-top:8px}
+.more .row a{font-family:var(--f-mono);font-size:.8125rem;text-decoration:none}
+.shot{border:1px solid var(--line);display:block;width:100%;height:auto;aspect-ratio:1100/771;object-fit:cover;max-width:100%}
+.more article.wide{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:24px;align-items:center}
+@media (max-width:760px){.more{grid-template-columns:minmax(0,1fr)}.more article.wide{grid-template-columns:minmax(0,1fr)}}
+
+/* skills */
+.matrix{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.matrix div{background:var(--ink);padding:20px 20px 22px;min-width:0}
+.matrix h3{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:12px;font-weight:400}
+.matrix p{font-size:.9375rem;color:var(--paper);line-height:1.75}
+.matrix p span{color:var(--faint)}
+.matrix small{display:block;margin-top:10px;font-size:var(--s-1);color:var(--faint)}
+
+/* about */
+.about{display:grid;grid-template-columns:12rem minmax(0,1fr);gap:24px}
+.about .prose{max-width:38em;display:grid;gap:18px}
+.about .prose p{font-family:var(--f-display);font-size:clamp(1.2rem,2vw,1.45rem);line-height:1.5;color:var(--paper);font-weight:350}
+.about .prose p.small{font-family:var(--f-body);font-size:var(--s0);color:var(--muted)}
+@media (max-width:760px){.about{grid-template-columns:minmax(0,1fr)}}
+
+/* timeline */
+.timeline{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.timeline li{display:grid;grid-template-columns:12rem minmax(0,1fr);gap:24px;padding-block:22px;border-bottom:1px solid var(--line)}
+.timeline time,.timeline .kind{font-family:var(--f-mono);font-size:.78rem;color:var(--faint);font-variant-numeric:tabular-nums}
+.timeline h3{font-size:1.375rem}
+.timeline .org{font-family:var(--f-mono);font-size:.8125rem;color:var(--signal);margin-top:4px}
+.timeline p{color:var(--muted);font-size:.9375rem;margin-top:8px;max-width:60ch}
+@media (max-width:760px){.timeline li{grid-template-columns:minmax(0,1fr);gap:6px}}
+
+/* contact */
+.contact h2{font-size:var(--s4);line-height:1.05;font-weight:350;max-width:14em}
+.contact h2 em{color:var(--signal);font-weight:300}
+.contact .lede{margin-top:20px}
+.channels{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+.channels > div{background:var(--panel);padding:18px 20px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.channels .k{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.channels .v{font-family:var(--f-mono);font-size:.9rem;color:var(--paper);overflow-wrap:anywhere;user-select:all}
+.channels .acts{display:flex;gap:14px;margin-top:4px}
+.channels .acts a,.channels .acts button{font-family:var(--f-mono);font-size:.8rem;background:none;border:0;padding:0;color:var(--signal);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.channels .acts button:hover,.channels .acts a:hover{color:var(--paper)}
+footer{border-top:1px solid var(--line);padding-block:28px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-family:var(--f-mono);font-size:.75rem;color:var(--faint)}
+
+/* diagram text */
+.dg text{font-family:var(--f-mono);fill:var(--muted);font-size:11px}
+.dg .t-strong{fill:var(--paper);font-size:12px}
+.dg .t-faint{fill:var(--faint);font-size:9.5px}
+.dg .box{fill:var(--ink);stroke:var(--line-2)}
+.dg .box-llm{fill:var(--ink);stroke:var(--violet)}
+.dg .box-key{fill:var(--ink);stroke:var(--signal)}
+.dg .edge{stroke:var(--line-2);fill:none;stroke-width:1.2}
+.dg .edge-hot{stroke:var(--signal);fill:none;stroke-width:1.2;stroke-dasharray:4 6;animation:flow 1.6s linear infinite}
+.dg .loop{stroke:var(--warn);fill:none;stroke-width:1.1;stroke-dasharray:3 4}
+.dg .arrow{fill:var(--line-2)}
+.dg .arrow-hot{fill:var(--signal)}
+@keyframes flow{to{stroke-dashoffset:-20}}
+.hero-fig .node{fill:var(--ink);stroke:var(--line-2)}
+.hero-fig .node-q{fill:var(--signal);stroke:none}
+.hero-fig .node-hit{fill:var(--ink);stroke:var(--signal);stroke-width:1.4}
+.hero-fig .node-llm{fill:var(--ink);stroke:var(--violet);stroke-width:1.4}
+.hero-fig .wire{stroke:var(--line);stroke-width:1}
+.hero-fig .wire-hit{stroke:var(--signal);stroke-width:1.1;stroke-dasharray:3 5;animation:flow 2s linear infinite}
+.hero-fig text{font-family:var(--f-mono);font-size:10px;fill:var(--faint)}
+.hero-fig .lab{fill:var(--muted)}
+
+.reveal{transition:opacity .6s ease,transform .6s ease}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--paper);color:var(--ink);font-family:var(--f-mono);font-size:.8125rem;padding:10px 14px;z-index:60}
+</style>
+
+</head>
+<body>
+<a class="skip" href="#work">Skip to projects</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Diksha Shahi, back to top"><b>DS</b><span>diksha shahi</span></a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav-list">Menu</button>
+    <nav aria-label="Primary">
+      <ul id="nav-list">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ============ HERO ============ -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-grid">
+      <div>
+        <span class="status"><span class="dot" aria-hidden="true"></span>Open to AI engineering internships · 2027 batch</span>
+        <h1 id="hero-title">I build AI systems that turn complex problems into <em>useful products.</em></h1>
+        <p class="who">Diksha Shahi — AI Developer Intern · B.Tech IT, final year</p>
+        <p class="lede">Final-year engineering student focused on AI engineering, retrieval-augmented generation, intelligent applications and practical software development. I care most about the unglamorous parts: validation, evaluation, and defenses that hold up when the model doesn't.</p>
+        <div class="ctas">
+          <a class="btn primary" href="#work">Explore my work <span class="arr" aria-hidden="true">→</span></a>
+          <!-- RESUME: set RESUME_URL in the script at the bottom to a hosted PDF (e.g. resume.pdf next to index.html). The button stays hidden until it is set. -->
+          <a class="btn" id="resume-btn" href="#" target="_blank" rel="noopener" hidden>Download résumé <span class="arr" aria-hidden="true">↓</span></a>
+          <a class="btn" id="resume-fallback" href="#contact">Request résumé <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+        <div class="links">
+          <a href="https://github.com/Diksha159457" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://www.linkedin.com/in/diksha-shahi" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="#contact">dikshashahi299@gmail.com</a>
+        </div>
+      </div>
+
+      <figure class="fig hero-fig" style="margin:0" aria-labelledby="hero-cap">
+        <figcaption class="fig-cap" id="hero-cap"><span>FIG. 0 — retrieval, top-k = 3</span><span>cos ≥ 0.30</span></figcaption>
+        <svg viewBox="0 0 420 300" role="img" aria-label="Diagram: a query is embedded, compared against a field of document vectors, the three nearest are retrieved and passed to a language model.">
+          <g id="field"></g>
+          <line class="wire-hit" x1="70" y1="150" x2="226" y2="96"/>
+          <line class="wire-hit" x1="70" y1="150" x2="248" y2="160"/>
+          <line class="wire-hit" x1="70" y1="150" x2="212" y2="208"/>
+          <line class="wire" x1="226" y1="96" x2="360" y2="150"/>
+          <line class="wire" x1="248" y1="160" x2="360" y2="150"/>
+          <line class="wire" x1="212" y1="208" x2="360" y2="150"/>
+          <circle class="node-q" cx="70" cy="150" r="6"/>
+          <text x="50" y="175" class="lab">query</text>
+          <circle class="node-hit" cx="226" cy="96" r="5"/><text x="234" y="90">0.71</text>
+          <circle class="node-hit" cx="248" cy="160" r="5"/><text x="256" y="155">0.58</text>
+          <circle class="node-hit" cx="212" cy="208" r="5"/><text x="220" y="224">0.44</text>
+          <rect class="node-llm" x="346" y="134" width="56" height="32"/>
+          <text x="358" y="154" class="lab">LLM</text>
+          <text x="16" y="286">embed → index → rank → ground → answer</text>
+        </svg>
+      </figure>
+    </div>
+    <a class="scroll-cue" href="#work"><span class="l" aria-hidden="true"></span>Selected work</a>
+  </section>
+
+  <!-- ============ WORK ============ -->
+  <section class="block" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">01 · Selected work</span>
+        <div>
+          <h2 id="work-title">Three LLM systems, built to be checked.</h2>
+          <p>Each one wraps a model in code that validates, retries and measures it. Every repository below has CI and an offline test suite that runs without an API key.</p>
+        </div>
+      </div>
+
+      <div class="evidence" role="list" aria-label="Evidence across the featured projects">
+        <div role="listitem"><b>96</b><span>offline test functions across Grid07, Code Review and Scenario Writer, each using a fake LLM client</span></div>
+        <div role="listitem"><b>0.94</b><span>prompt-injection recall in Grid07, with zero false positives on its corpus</span></div>
+        <div role="listitem"><b>3</b><span>retry loops that tell the model exactly which check it failed</span></div>
+        <div role="listitem"><b>24h</b><span>to ship the first Code Review build at a May 2026 hackathon</span></div>
+      </div>
+
+      <!-- ---------- PROJECT 1: GRID07 ---------- -->
+      <article class="project featured reveal" id="grid07" style="margin-top:56px;border-top:0;padding-top:0" aria-labelledby="p1">
+        <div class="p-meta">
+          <span class="num">FIG. 1</span>
+          <span class="badge ci">CI · Python 3.11 / 3.12</span>
+          <span class="badge">Docker + Render config</span>
+        </div>
+        <div class="p-body">
+          <h3 id="p1">Grid07<small>cognitive routing · RAG · prompt-injection defense</small></h3>
+          <p class="value">A multi-persona bot engine that routes posts to the right persona by vector similarity, drafts posts through a LangGraph state machine, and argues in deep threads behind a four-layer prompt-injection defense with measured precision and recall.</p>
+          <ul class="stack" aria-label="Technology">
+            <li>Python</li><li>FAISS</li><li>sentence-transformers</li><li>LangGraph</li><li>LangChain</li><li>Groq · Llama 3.1 8B</li><li>HTTP API</li><li>Docker</li><li>GitHub Actions</li>
+          </ul>
+
+          <figure class="fig p-fig" aria-labelledby="g7cap">
+            <figcaption class="fig-cap" id="g7cap"><span>Combat engine — request path through defense layers</span><span>grid07/defense.py</span></figcaption>
+            <div class="diagram">
+              <svg class="dg" viewBox="0 0 760 210" role="img" aria-label="Pipeline: thread messages pass through normalisation, weighted detection and spotlighting before the persona-locked LLM; its reply passes an output guard. A FAISS router picks the persona.">
+                <defs>
+                  <marker id="a1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" class="arrow"/></marker>
+                  <marker id="a2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" class="arrow-hot"/></marker>
+                </defs>
+                <rect class="box" x="10" y="40" width="104" height="52"/><text x="22" y="62" class="t-strong">thread</text><text x="22" y="80" class="t-faint">full history</text>
+                <rect class="box-key" x="146" y="40" width="104" height="52"/><text x="158" y="62" class="t-strong">L1 normalise</text><text x="158" y="80" class="t-faint">NFKC · leetspeak</text>
+                <rect class="box-key" x="282" y="40" width="104" height="52"/><text x="294" y="62" class="t-strong">L2 detect</text><text x="294" y="80" class="t-faint">noisy-OR score</text>
+                <rect class="box-key" x="418" y="40" width="104" height="52"/><text x="430" y="62" class="t-strong">L3 spotlight</text><text x="430" y="80" class="t-faint">quote thread</text>
+                <rect class="box-llm" x="554" y="40" width="88" height="52"/><text x="566" y="62" class="t-strong">LLM</text><text x="566" y="80" class="t-faint">persona-locked</text>
+                <rect class="box-key" x="664" y="40" width="88" height="52"/><text x="674" y="62" class="t-strong">L4 guard</text><text x="674" y="80" class="t-faint">persona breaks</text>
+                <path class="edge-hot" d="M114 66H144" marker-end="url(#a2)"/>
+                <path class="edge-hot" d="M250 66H280" marker-end="url(#a2)"/>
+                <path class="edge-hot" d="M386 66H416" marker-end="url(#a2)"/>
+                <path class="edge-hot" d="M522 66H552" marker-end="url(#a2)"/>
+                <path class="edge-hot" d="M642 66H662" marker-end="url(#a2)"/>
+                <rect class="box" x="418" y="140" width="224" height="46"/><text x="430" y="160" class="t-strong">FAISS persona router</text><text x="430" y="176" class="t-faint">MiniLM · inner product = cosine</text>
+                <path class="edge" d="M598 140V94" marker-end="url(#a1)"/>
+                <text x="294" y="122" class="t-faint">risk score ≥ threshold → INJECTION ALERT in prompt</text>
+                <path class="loop" d="M334 92V108H600V94"/>
+                <text x="664" y="118" class="t-faint">fail → replaced</text>
+              </svg>
+            </div>
+          </figure>
+
+          <div class="table-wrap" role="region" aria-label="Injection detector results" tabindex="0">
+            <table class="metric-table">
+              <thead><tr><th>Detector</th><th>Precision</th><th>Recall</th><th>F1</th><th>False-pos.</th></tr></thead>
+              <tbody>
+                <tr><td>v1 regex baseline</td><td>0.88</td><td>0.44</td><td>0.58</td><td>0.07</td></tr>
+                <tr class="us"><td>v2 layered</td><td>1.00</td><td>0.94</td><td>0.97</td><td>0.00</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note">Measured on 62 labelled messages (32 attacks, 30 hostile-but-benign). The corpus was written alongside the rules, so it works as a regression suite, not an unbiased benchmark; expect lower recall on unseen attacks. CI fails the build if recall drops below 0.9 or a false positive appears.</p>
+
+          <div class="p-links">
+            <a href="https://github.com/Diksha159457/Grid07" target="_blank" rel="noopener">Source ↗</a>
+            <a href="https://github.com/Diksha159457/Grid07/blob/main/execution_logs.md" target="_blank" rel="noopener">Execution logs ↗</a>
+          </div>
+
+          <details class="case" id="case-grid07">
+            <summary>Read the case study</summary>
+            <div class="case-body">
+              <section><h4>Overview</h4><p>Grid07 began as a three-part AI engineering assignment and was then rebuilt into a tested package with a CLI, an HTTP API and deployment assets. It covers persona routing, a content engine and a thread-aware reply engine.</p></section>
+              <section><h4>Problem</h4><p>Bots that argue in public threads get attacked through the thread itself: a reply says <code>ignore previous instructions</code>, spells it in leetspeak, or fakes a prompt delimiter. A single regex catches the obvious cases and misses most of the rest.</p></section>
+              <section><h4>Design goals</h4><ul><li>Route each post only to personas it is actually relevant to.</li><li>Give replies the full argument history, not only the newest message.</li><li>Make defense measurable, so a rule change can be judged by numbers.</li></ul></section>
+              <section><h4>Architecture</h4><ul><li><strong>Router</strong> — persona descriptions embedded with <code>all-MiniLM-L6-v2</code>, normalised, stored in an inner-product FAISS index.</li><li><strong>Content engine</strong> — a three-node LangGraph graph: <code>decide_search</code> → <code>web_search</code> (mock SearXNG) → <code>draft_post</code>, returning strict JSON.</li><li><strong>Combat engine</strong> — builds the prompt from parent post and prior replies, wrapped in the four defense layers.</li></ul></section>
+              <section><h4>Trade-offs</h4><ul><li>The assignment asked for a 0.85 similarity threshold. MiniLM scores related text far lower, so the demos use a calibrated ~0.30 while keeping the required signature.</li><li>Weak signals are combined with noisy-OR, so "I apologize for the late reply" passes while "you are now a polite customer service bot" is flagged.</li><li>The default provider is a deterministic mock; Groq is opt-in and falls back to the mock if the key or packages are missing.</li></ul></section>
+              <section><h4>Challenges</h4><p>The v1 regex detector had 0.44 recall. Obfuscated attacks (spaced letters, full-width text, zero-width characters) slipped through, and broadening the regex started flagging normal arguments.</p></section>
+              <section><h4>Solutions</h4><p>Normalise first, then score with weighted rules, then quote the thread so it cannot imitate prompt structure, then check the model's output for persona breaks. An eval harness (<code>python -m grid07.eval_defense</code>) and a CI quality gate keep the numbers from regressing.</p></section>
+              <section><h4>Demo</h4><p>No hosted demo is linked yet. The repository ships a small web UI, a CLI demo (<code>python -m grid07.cli demo</code>) and recorded execution logs.</p></section>
+              <section><h4>Limitations</h4><ul><li>Two purely semantic attacks ("let's play a game where you're a calm diplomat") still evade the keyword layers by design.</li><li>The web search tool is mocked.</li><li>Next: an attack corpus written independently of the rules, and a semantic classifier as a fifth layer.</li></ul></section>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- ---------- PROJECT 2: CODE REVIEW ---------- -->
+      <article class="project reveal" id="code-review" aria-labelledby="p2">
+        <div class="p-meta">
+          <span class="num">FIG. 2</span>
+          <span class="badge ci">CI · reviews its own PRs</span>
+          <span class="badge">Hackathon · May 2026</span>
+        </div>
+        <div class="p-body">
+          <h3 id="p2">AI Code Review Assistant<small>git diff → structured review → CI exit code</small></h3>
+          <p class="value">Reviews git diffs for bugs, security, performance and style issues, returns a validated 0–100 score with fix suggestions, and posts one sticky comment on every pull request through a GitHub Action.</p>
+          <ul class="stack" aria-label="Technology">
+            <li>Python</li><li>Pydantic v2</li><li>Groq · Llama 3.3 70B</li><li>Flask</li><li>Gunicorn</li><li>GitHub Actions</li><li>Vanilla JS UI</li>
+          </ul>
+
+          <figure class="fig p-fig" aria-labelledby="crcap">
+            <figcaption class="fig-cap" id="crcap"><span>Review pipeline</span><span>ai_reviewer/</span></figcaption>
+            <div class="diagram">
+              <svg class="dg" viewBox="0 0 760 170" role="img" aria-label="Pipeline: diff split per file and chunked, each chunk reviewed by the LLM inside untrusted diff tags, validated by a Pydantic schema with self-repair retry, merged, then rendered to terminal, markdown or JSON.">
+                <defs><marker id="b2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" class="arrow-hot"/></marker></defs>
+                <rect class="box" x="10" y="30" width="110" height="52"/><text x="22" y="52" class="t-strong">diff</text><text x="22" y="70" class="t-faint">stdin/file/git</text>
+                <rect class="box-key" x="150" y="30" width="130" height="52"/><text x="162" y="52" class="t-strong">diff.py</text><text x="162" y="70" class="t-faint">per-file chunks</text>
+                <rect class="box-llm" x="310" y="30" width="130" height="52"/><text x="322" y="52" class="t-strong">engine.py</text><text x="322" y="70" class="t-faint">&lt;diff&gt; untrusted</text>
+                <rect class="box-key" x="470" y="30" width="130" height="52"/><text x="482" y="52" class="t-strong">schema.py</text><text x="482" y="70" class="t-faint">normalise · merge</text>
+                <rect class="box" x="630" y="30" width="120" height="52"/><text x="642" y="52" class="t-strong">render</text><text x="642" y="70" class="t-faint">tty · md · json</text>
+                <path class="edge-hot" d="M120 56H148" marker-end="url(#b2)"/>
+                <path class="edge-hot" d="M280 56H308" marker-end="url(#b2)"/>
+                <path class="edge-hot" d="M440 56H468" marker-end="url(#b2)"/>
+                <path class="edge-hot" d="M600 56H628" marker-end="url(#b2)"/>
+                <path class="loop" d="M535 82V112H375V84"/>
+                <text x="384" y="130" class="t-faint">bad JSON → retry with the parse error</text>
+                <text x="640" y="104" class="t-faint">exit 0 / 1 / 2</text>
+              </svg>
+            </div>
+          </figure>
+
+          <dl class="facts">
+            <div><dt>Chunking</dt><dd>Splits on <code style="font-family:var(--f-mono);font-size:.85em">diff --git</code> so the model never reviews half a function.</dd></div>
+            <div><dt>Determinism</dt><dd>Schema normalises enum case, string scores and stray fences before exit codes are computed.</dd></div>
+            <div><dt>Tests</dt><dd>30 offline tests, ~91% coverage, injected fake LLM client.</dd></div>
+          </dl>
+
+          <div class="p-links">
+            <a href="https://github.com/Diksha159457/my-ai-project" target="_blank" rel="noopener">Source ↗</a>
+            <a href="https://www.loom.com/share/c8a5ec67e73a4dec8048fca51941badd" target="_blank" rel="noopener">3-min demo video ↗</a>
+          </div>
+
+          <details class="case" id="case-review">
+            <summary>Read the case study</summary>
+            <div class="case-body">
+              <section><h4>Overview</h4><p>Built solo in 24 hours at a May 2026 hackathon, then hardened: a package with an <code>ai-review</code> CLI, a Flask API, a zero-dependency web UI, and a workflow that reviews the repository's own pull requests.</p></section>
+              <section><h4>Problem</h4><p>Manual review misses SQL injection, hardcoded secrets and regressions under deadline pressure, especially in large pull requests.</p></section>
+              <section><h4>Architecture</h4><ul><li><strong>diff.py</strong> splits per file, drops lockfiles, packs hunks into chunks of at most 24k characters.</li><li><strong>engine.py</strong> makes one LLM call per chunk with the diff fenced as untrusted input, retries with self-repair and exponential backoff.</li><li><strong>schema.py</strong> validates and merges chunk reviews; the worst score wins.</li><li><strong>render.py</strong> outputs a coloured terminal report, GitHub markdown or JSON.</li></ul></section>
+              <section><h4>Trade-offs</h4><ul><li>Groq for latency: reviews return in a couple of seconds, which matters inside CI.</li><li>The LLM client is an injected <code>(system, user, model) → str</code> callable, so any provider can be swapped in and the pipeline is tested offline.</li></ul></section>
+              <section><h4>Challenges</h4><p>Model output drifted: <code>"Critical"</code> vs <code>"critical"</code>, scores as strings, code fences around JSON. Any of these could break exit codes. A pull request could also try to talk the model into a perfect score.</p></section>
+              <section><h4>Solutions</h4><p>Validate rather than trust: a Pydantic layer normalises every field, and failed parses are retried with the specific error. The system prompt tells the model to ignore instructions inside the diff tags.</p></section>
+              <section><h4>Demo</h4><p>A recorded walkthrough is linked above. The web UI is a single <code>app.html</code> that runs with your own Groq key.</p></section>
+              <section><h4>Limitations</h4><ul><li>Comments are posted as one summary, not inline on diff lines yet.</li><li>Planned: inline comments, GitLab and Bitbucket webhooks, per-team rule sets, score history.</li></ul></section>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- ---------- PROJECT 3: SCENARIO WRITER ---------- -->
+      <article class="project reveal" id="scenario-writer" aria-labelledby="p3">
+        <div class="p-meta">
+          <span class="num">FIG. 3</span>
+          <span class="badge ci">CI · on-demand live eval</span>
+          <span class="badge">English · हिन्दी</span>
+        </div>
+        <div class="p-body">
+          <h3 id="p3">AI Scenario Writer<small>4 input fields → a renderable roleplay scenario</small></h3>
+          <p class="value">Generates workplace practice scenarios for two learner profiles in English or Hindi, and enforces every rule the prompt states in code, so a scenario player can render the output without defensive checks.</p>
+          <ul class="stack" aria-label="Technology">
+            <li>Python</li><li>Pydantic v2</li><li>Groq · Llama 3.3 70B</li><li>Streamlit</li><li>pytest</li><li>GitHub Actions</li>
+          </ul>
+
+          <figure class="fig p-fig" aria-labelledby="swcap">
+            <figcaption class="fig-cap" id="swcap"><span>Input → output, with the checks between</span><span>src/generator.py</span></figcaption>
+            <div class="diagram">
+              <svg class="dg" viewBox="0 0 760 190" role="img" aria-label="Input JSON is validated, a prompt is built, the LLM returns JSON which is parsed, schema-checked and quality-checked; failures are classified and fed back into the next attempt, up to three attempts.">
+                <defs><marker id="c2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" class="arrow-hot"/></marker></defs>
+                <rect class="box" x="10" y="20" width="150" height="84"/>
+                <text x="20" y="40" class="t-faint">{</text>
+                <text x="28" y="54" class="t-faint">"icp_type": "high_wage",</text>
+                <text x="28" y="68" class="t-faint">"milestone_code": "M03",</text>
+                <text x="28" y="82" class="t-faint">"language": "hi" …</text>
+                <text x="20" y="96" class="t-faint">}</text>
+                <rect class="box-key" x="186" y="38" width="100" height="48"/><text x="198" y="58" class="t-strong">validate</text><text x="198" y="74" class="t-faint">enum checks</text>
+                <rect class="box-llm" x="312" y="38" width="100" height="48"/><text x="324" y="58" class="t-strong">LLM</text><text x="324" y="74" class="t-faint">prompt_builder</text>
+                <rect class="box-key" x="438" y="38" width="100" height="48"/><text x="450" y="58" class="t-strong">schema</text><text x="450" y="74" class="t-faint">extra=forbid</text>
+                <rect class="box-key" x="564" y="38" width="100" height="48"/><text x="576" y="58" class="t-strong">quality</text><text x="576" y="74" class="t-faint">script ratio</text>
+                <rect class="box" x="690" y="38" width="62" height="48"/><text x="700" y="66" class="t-strong">JSON</text>
+                <path class="edge-hot" d="M160 62H184" marker-end="url(#c2)"/>
+                <path class="edge-hot" d="M286 62H310" marker-end="url(#c2)"/>
+                <path class="edge-hot" d="M412 62H436" marker-end="url(#c2)"/>
+                <path class="edge-hot" d="M538 62H562" marker-end="url(#c2)"/>
+                <path class="edge-hot" d="M664 62H688" marker-end="url(#c2)"/>
+                <path class="loop" d="M614 86V130H362V88"/>
+                <text x="372" y="150" class="t-faint">exact error fed back · json / schema / quality / provider · ≤3 tries</text>
+              </svg>
+            </div>
+          </figure>
+
+          <dl class="facts">
+            <div><dt>Cross-field rules</dt><dd>Exactly three strategy chips SC1–SC3 with distinct labels; every rubric axis has a different max score.</dd></div>
+            <div><dt>Language check</dt><dd>Hindi output needs at least 60% Devanagari letters; English at most 5%.</dd></div>
+            <div><dt>Tests</dt><dd>37 offline tests drive every retry path with a scripted fake LLM.</dd></div>
+          </dl>
+
+          <div class="p-links">
+            <a href="https://github.com/Diksha159457/ai-scenario-writer" target="_blank" rel="noopener">Source ↗</a>
+            <a href="https://loom.com/share/d02e80deb330482588550dbe79527ecb" target="_blank" rel="noopener">Demo video ↗</a>
+          </div>
+
+          <details class="case" id="case-scenario">
+            <summary>Read the case study</summary>
+            <div class="case-body">
+              <section><h4>Overview</h4><p>Built for an AI engineering challenge: a module that turns a four-field request into a full scenario JSON (scene, characters, opening line, three strategies, success criteria, rubric, transfer targets) for a scenario-player app.</p></section>
+              <section><h4>Problem</h4><p>Prompts are requests, not guarantees. Earlier sample outputs had wrong chip ids and identical rubric scores, and either would break the player downstream.</p></section>
+              <section><h4>Design goals</h4><ul><li>Two distinct learner profiles: tech professionals, and people moving from gig, retail or service work.</li><li>The same schema in English and Hindi.</li><li>Three strategy paths that are genuinely different.</li></ul></section>
+              <section><h4>Architecture</h4><ul><li><strong>schemas.py</strong> — Pydantic contracts with cross-field validators.</li><li><strong>quality.py</strong> — request-aware checks: script ratio, generic openers, named characters.</li><li><strong>generator.py</strong> — the retry loop; <code>generate_with_report()</code> returns a per-attempt trace with error kind and latency.</li><li><strong>evaluate.py</strong> — compares models on first-try validity, validity after retries, average tries, p50/p95 latency.</li></ul></section>
+              <section><h4>Trade-offs</h4><ul><li>Input fields are enum-checked and <code>skill_target</code> must be snake_case, which also blocks free-text prompt injection through the inputs.</li><li>If only soft quality issues remain after three attempts, the scenario is returned with warnings instead of failing the user.</li></ul></section>
+              <section><h4>Solutions &amp; lessons</h4><p>Classify each failure and send the exact message back (for example <code>strategy_chips: ids must be ['SC1','SC2','SC3'] in order</code>). Specific feedback converges faster than a generic "try again", and the eval measures how many tries each model needs.</p></section>
+              <section><h4>Limitations</h4><ul><li>Quality checks are heuristic; they catch generic writing but not weak writing.</li><li>Next: publish a live eval report from the Actions workflow alongside the code.</li></ul></section>
+            </div>
+          </details>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ MORE WORK ============ -->
+  <section class="block" id="more" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">02 · More work</span>
+        <div>
+          <h2 id="more-title">Agents, NLP and data, with live demos.</h2>
+          <p>Smaller projects, each with tests and CI. Render-hosted demos sleep on the free tier and can take about 30 seconds to wake.</p>
+        </div>
+      </div>
+      <div class="more">
+        <article class="wide reveal">
+          <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+            <span class="badge live mono">Live · GitHub Pages</span>
+            <h3>COVID-19 Global Dashboard</h3>
+            <p>A static analytics dashboard built from Our World in Data: KPI cards, choropleth, country rankings, vaccination comparisons and per-million trend lines. A versioned 140 KB data snapshot keeps builds reproducible, and a test fails if the committed HTML drifts from it.</p>
+            <p>Fixed real data bugs along the way: the US was missing from trends because the source named it <span class="mono">US</span>, and 10 of 12 "vaccination leaders" showed 0% because the latest file covered only 6 countries.</p>
+            <ul class="stack"><li>Python</li><li>Pandas</li><li>Plotly.js</li><li>GitHub Actions</li></ul>
+            <div class="row"><a href="https://diksha159457.github.io/covid-data-visualization/" target="_blank" rel="noopener">Open dashboard ↗</a><a href="https://github.com/Diksha159457/covid-data-visualization" target="_blank" rel="noopener">Source ↗</a></div>
+          </div>
+          <img class="shot" src="covid-dashboard.webp" width="1100" height="771" alt="Screenshot of the COVID-19 dashboard: KPI cards above a world choropleth and ranking charts." loading="lazy" decoding="async">
+        </article>
+        <article class="reveal">
+          <span class="badge live mono">Live · Render</span>
+          <h3>Voice Agent</h3>
+          <p>Speak or type a command; Whisper transcribes it, rule-based intent runs first with an LLM fallback, and the agent writes code or files inside a filesystem sandbox. Document extraction is zip-bomb safe and chat history writes are atomic.</p>
+          <ul class="stack"><li>Flask</li><li>Groq Whisper</li><li>Llama 3</li><li>55 tests</li></ul>
+          <div class="row"><a href="https://voice-agent-8085.onrender.com" target="_blank" rel="noopener">Try it ↗</a><a href="https://github.com/Diksha159457/Voice_agent" target="_blank" rel="noopener">Source ↗</a></div>
+        </article>
+        <article class="reveal">
+          <span class="badge ci mono">CLI · CI</span>
+          <h3>Hindi → English Dataset Translator</h3>
+          <p>Translates only the Hindi cells of a CSV, each unique string once, with a SQLite cache so a crashed run never pays twice. Local MarianMT or Google backends, optional DistilBERT sentiment columns.</p>
+          <ul class="stack"><li>HuggingFace</li><li>MarianMT</li><li>Pandas</li><li>SQLite</li></ul>
+          <div class="row"><a href="https://github.com/Diksha159457/Hindi-to-English-Dataset-Translator-using-Python" target="_blank" rel="noopener">Source ↗</a></div>
+        </article>
+        <article class="reveal">
+          <span class="badge live mono">Live · Streamlit</span>
+          <h3>IPL 2022 Analytics</h3>
+          <p>A notebook turned into a reusable pipeline and dashboard: cleaned team-name and date inconsistencies, engineered toss-conversion and chasing metrics, filters and CSV upload.</p>
+          <ul class="stack"><li>Pandas</li><li>Streamlit</li><li>99% coverage</li></ul>
+          <div class="row"><a href="https://ipl-analytics-project-zx8cnbgusgmujruunxov7n.streamlit.app/" target="_blank" rel="noopener">Open app ↗</a><a href="https://github.com/Diksha159457/ipl-analytics-project" target="_blank" rel="noopener">Source ↗</a></div>
+        </article>
+        <article class="reveal">
+          <span class="badge mono">All repositories</span>
+          <h3>Everything else</h3>
+          <p>Every public repository, including earlier experiments and open-source contributions through GSSoC.</p>
+          <div class="row"><a href="https://github.com/Diksha159457?tab=repositories" target="_blank" rel="noopener">Browse GitHub ↗</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section class="block" id="skills" aria-labelledby="skills-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">03 · Toolkit</span>
+        <div>
+          <h2 id="skills-title">What I've shipped with.</h2>
+          <p>Listed only where there's code to point to.</p>
+        </div>
+      </div>
+      <div class="matrix">
+        <div><h3>Languages</h3><p>Python <span>/</span> SQL <span>/</span> TypeScript <span>/</span> JavaScript</p><small>TypeScript through a VS Code extension at work</small></div>
+        <div><h3>LLM engineering</h3><p>RAG <span>/</span> embeddings <span>/</span> structured output <span>/</span> retry &amp; self-repair <span>/</span> prompt-injection defense <span>/</span> model evals</p><small>Grid07, Code Review, Scenario Writer</small></div>
+        <div><h3>Frameworks &amp; models</h3><p>LangGraph <span>/</span> LangChain <span>/</span> FAISS <span>/</span> ChromaDB <span>/</span> sentence-transformers <span>/</span> Groq · Llama <span>/</span> Whisper <span>/</span> HuggingFace</p></div>
+        <div><h3>Backend</h3><p>FastAPI <span>/</span> Flask <span>/</span> Gunicorn <span>/</span> Pydantic <span>/</span> REST APIs <span>/</span> SQLite <span>/</span> PostgreSQL <span>/</span> pgvector</p></div>
+        <div><h3>Data</h3><p>Pandas <span>/</span> NumPy <span>/</span> Plotly <span>/</span> Streamlit <span>/</span> Jupyter</p><small>COVID, IPL, data-analysis internship</small></div>
+        <div><h3>Engineering practice</h3><p>pytest <span>/</span> ruff <span>/</span> GitHub Actions <span>/</span> Docker <span>/</span> Render <span>/</span> GitHub Pages <span>/</span> Git <span>/</span> MCP <span>/</span> n8n</p><small>every featured repo runs CI</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="block" id="about" aria-labelledby="about-title">
+    <div class="wrap about">
+      <span class="eyebrow" id="about-title">04 · About</span>
+      <div class="prose">
+        <p>I'm Diksha, a final-year Information Technology student at Deen Dayal Upadhyaya Gorakhpur University, and an AI developer intern building internal AI tooling for engineers.</p>
+        <p>I learn by building, then by breaking what I built. Most of my projects started as a weekend or hackathon version and became real once I added the tests, the evals and the failure handling.</p>
+        <p class="small">The work I find most interesting sits between the model and the product: making an LLM's output reliable enough that other code can depend on it, measuring whether a change actually helped, and keeping cost and latency honest. Next, I want to work on retrieval quality and evaluation for systems people use every day.</p>
+        <p class="small mono" style="font-size:.8125rem">Languages: English, Hindi (professional) · German (elementary)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section class="block" id="experience" aria-labelledby="exp-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">05 · Experience</span>
+        <div><h2 id="exp-title">Experience &amp; learning</h2></div>
+      </div>
+      <ol class="timeline" reversed>
+        <li>
+          <time datetime="2026-05">May 2026 — present</time>
+          <div>
+            <h3>AI Developer Intern</h3>
+            <p class="org">Banao Technologies</p>
+            <p>Built the company's internal LLM gateway from scratch: a FastAPI proxy with multi-provider routing, per-user budget enforcement, usage logging and Docker deployment, now the single approved path for every model call on the platform.</p>
+            <p>Owner of an AI coding assistant for VS Code and the command line. Built its cost-aware model router (cheap, default and strong tiers with automatic escalation) and a repository-indexing RAG pipeline (file walker, chunker, embeddings, ChromaDB) that grounds answers in project context.</p>
+            <p>Benchmarked Claude Haiku, Sonnet and Opus against open-weight models across 17 test categories for quality, latency and cost; the results set the production defaults. Found and escalated a fail-open bug that let requests skip budget checks. Also deployed Onyx enterprise search with token-budget middleware, connected it to LibreChat over MCP, and wrote decision briefs for leadership.</p>
+          </div>
+        </li>
+        <li>
+          <time datetime="2026-05">May — Aug 2026</time>
+          <div>
+            <h3>Data Analyst Intern</h3>
+            <p class="org">The Skybrisk</p>
+          </div>
+        </li>
+        <li>
+          <time datetime="2026-03">Mar — Apr 2026</time>
+          <div>
+            <h3>Data Scientist Intern · Data Analyst</h3>
+            <p class="org">Codveda Technologies</p>
+            <p>Exploratory analysis on datasets of over 1M rows with Pandas, Matplotlib and Seaborn: cleaning, outlier handling, statistical correlation and charts for non-technical readers. Built Python data-processing pipelines over 100K+ records with SQL-backed storage.</p>
+          </div>
+        </li>
+        <li>
+          <span class="kind">Hackathon · May 2026</span>
+          <div>
+            <h3>AI Code Review Assistant</h3>
+            <p>Built solo in 24 hours, then hardened into the tested CLI, API and GitHub Action shown above.</p>
+          </div>
+        </li>
+        <li>
+          <span class="kind">Hackathon</span>
+          <div>
+            <h3>Paranox 2.0 Hackathon</h3>
+            <p>Participant.</p>
+          </div>
+        </li>
+        <li>
+          <span class="kind">Open source · 2026</span>
+          <div>
+            <h3>Google Summer of Code 2026 — Applicant</h3>
+            <p>Contributed to an organisation's codebase and wrote a project proposal during the application period. Not selected for the program.</p>
+          </div>
+        </li>
+        <li>
+          <span class="kind">Open source</span>
+          <div>
+            <h3>GirlScript Summer of Code (GSSoC)</h3>
+            <p>Contributor. Merged pull requests earned the GitHub Pull Shark achievement.</p>
+          </div>
+        </li>
+        <li>
+          <span class="kind">Certifications</span>
+          <div>
+            <h3>Artificial Intelligence — Samsung Innovation Campus</h3>
+            <p class="org">ESSCI · Jul — Oct 2025</p>
+            <h3 style="margin-top:16px">AWS APAC — Solutions Architecture Job Simulation</h3>
+            <h3 style="margin-top:16px">AI Foundations: Machine Learning</h3>
+            <p class="org">LinkedIn Learning · Mar 2025</p>
+            <h3 style="margin-top:16px">IoT Foundations: Operating System Fundamentals</h3>
+          </div>
+        </li>
+        <li>
+          <time datetime="2023-09">2023 — 2027</time>
+          <div>
+            <h3>B.Tech, Information Technology</h3>
+            <p class="org">Deen Dayal Upadhyaya Gorakhpur University</p>
+          </div>
+        </li>
+        <li>
+          <time datetime="2023">Class XII · 2023</time>
+          <div>
+            <h3>Class XII — 80% · Class X — 90%</h3>
+            <p class="org">GN National Public School · CBSE</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="block contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <span class="eyebrow">06 · Contact</span>
+      <h2 id="contact-title" style="margin-top:18px">Have an interesting problem <em>to solve?</em></h2>
+      <p class="lede">I'm looking for AI engineering, GenAI and software development internships and 2027 graduate roles, in Indian metros, hybrid or remote. Recruiters, engineering teams and collaborators are all welcome to write.</p>
+      <div class="channels">
+        <div>
+          <span class="k">Email</span>
+          <span class="v" id="email-v">dikshashahi299@gmail.com</span>
+          <span class="acts"><button type="button" id="copy-email">Copy</button><a href="mailto:dikshashahi299@gmail.com">Open mail app</a></span>
+        </div>
+        <div>
+          <span class="k">LinkedIn</span>
+          <span class="v">in/diksha-shahi</span>
+          <span class="acts"><a href="https://www.linkedin.com/in/diksha-shahi" target="_blank" rel="noopener">Open profile ↗</a></span>
+        </div>
+        <div>
+          <span class="k">GitHub</span>
+          <span class="v">Diksha159457</span>
+          <span class="acts"><a href="https://github.com/Diksha159457" target="_blank" rel="noopener">Open profile ↗</a></span>
+        </div>
+        <div>
+          <span class="k">Résumé</span>
+          <span class="v" id="resume-v">Available on request by email</span>
+          <span class="acts"><a id="resume-link" href="#" target="_blank" rel="noopener" hidden>Download PDF ↓</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Diksha Shahi · Gorakhpur, India</span>
+    <span>Hand-built HTML &amp; CSS. No trackers.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ---- CONFIG: edit here ---- */
+  var RESUME_URL = ""; // e.g. "resume.pdf" or a public Google Drive link
+  /* --------------------------- */
+  document.documentElement.classList.add('js');
+
+  // résumé wiring: only show download controls once a real URL exists
+  if (RESUME_URL) {
+    var b=document.getElementById('resume-btn'), f=document.getElementById('resume-fallback'), l=document.getElementById('resume-link'), v=document.getElementById('resume-v');
+    b.href=RESUME_URL; b.hidden=false; f.hidden=true; l.href=RESUME_URL; l.hidden=false; v.textContent='PDF, updated 2026';
+  }
+
+  // mobile nav
+  var btn=document.getElementById('menu-btn'), list=document.getElementById('nav-list');
+  btn.addEventListener('click',function(){var o=list.classList.toggle('open');btn.setAttribute('aria-expanded',o);btn.textContent=o?'Close':'Menu';});
+  list.addEventListener('click',function(e){if(e.target.tagName==='A'){list.classList.remove('open');btn.setAttribute('aria-expanded','false');btn.textContent='Menu';}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&list.classList.contains('open')){btn.click();btn.focus();}});
+
+  // open case study from hash (#case-grid07 etc.)
+  function openFromHash(){var h=location.hash.slice(1);if(!h)return;var el=document.getElementById(h);if(el&&el.tagName==='DETAILS')el.open=true;}
+  openFromHash(); window.addEventListener('hashchange',openFromHash);
+
+  // copy email
+  function toast(msg){var t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.remove();},1800);}
+  document.getElementById('copy-email').addEventListener('click',function(){
+    var txt='dikshashahi299@gmail.com';
+    function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('email-v'));var s=getSelection();s.removeAllRanges();s.addRange(r);toast('Selected. Press Ctrl+C to copy');}
+    try{navigator.clipboard.writeText(txt).then(function(){toast('Email copied');},fallback);}catch(e){fallback();}
+  });
+
+  // hero vector field (decorative, deterministic)
+  var g=document.getElementById('field'), seed=7;
+  function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
+  var ns='http://www.w3.org/2000/svg', s='';
+  for(var i=0;i<46;i++){var x=130+rnd()*190,y=30+rnd()*230,r=1.6+rnd()*2.2;s+='<circle class="node" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+r.toFixed(1)+'"/>';}
+  g.innerHTML=s;
+
+})();
+</script>
+
+</body>
+</html>
